@@ -96,12 +96,15 @@ def get_latest_news():
     """
     # Parameters for News API request
     params = {
-        "apiKey": config.newsapi_key,  # API key for authentication
         "language": "en",  # Language for news articles
         "q": COMPANY_NAME,  # Query term for fetching news about the company
     }
+    # HTTP headers including auth token
+    headers = {
+        "X-Api-Key": config.newsapi_key # API key for authentication
+    }
     # Send GET request to the news API
-    response = requests.get(NEWS_ENDPOINT, params=params)
+    response = requests.get(NEWS_ENDPOINT, params=params, headers=headers)
     response.raise_for_status()  # Raise exception for HTTP errors
     # Extract articles from the response
     articles = response.json().get("articles", [])
